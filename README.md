@@ -1,6 +1,6 @@
 # CaHCL: piRNA-disease association prediction based on large-scale model-guided semantic alignment and causal debiasing
 
-This repository contains the official PyTorch implementation for the paper **"CaHCL: piRNA-disease association prediction based on large-scale model-guided semantic alignment and causal debiasing"** (Submitted to *Knowledge-Based Systems*).
+This repository contains the official PyTorch implementation for the paper **"CaHCL: piRNA-disease association prediction based on large-scale model-guided semantic alignment and causal debiasing"**.
 
 ## 💡 Overview
 CaHCL is a cross-modal "Teacher-Student" dual-stream framework designed to accurately identify piRNA-disease associations (PDAs) in extremely sparse networks. It synergizes **Causal Inference (IPW)** and **Large Language Models (LLMs)** to overcome topological data leakage, popularity bias, and false-negative collision traps inherent in conventional Graph Neural Networks (GNNs).
