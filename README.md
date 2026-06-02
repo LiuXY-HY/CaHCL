@@ -26,11 +26,15 @@ First, leverage the frozen pre-trained language models to extract high-fidelity 
 python preprocessing/BioBERT_disease.py
 
 #### Extract piRNA sequence representations using DNABERT-2
-python preprocessing/DNABERT-2_piRNA.py
+```python
+preprocessing/DNABERT-2_piRNA.py
+```
 
 ### Step 2: Association Network Construction
 Align the biological features with the bipartite graph topology to generate the required .pt and .npy files.
-python preprocessing/process_association.py
+```python
+preprocessing/process_association.py
+```
 
 ### Step 3: Train and Evaluate CaHCL (Student Stream & Alignment)
 You can train the model directly using the main script. The framework is equipped with a `DATASET` configuration to adaptively switch physical settings based on the target dataset's sparsity.
