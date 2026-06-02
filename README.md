@@ -23,7 +23,9 @@ pip install torch-sparse==0.6.17+pt113cu116
 First, leverage the frozen pre-trained language models to extract high-fidelity semantic anchors.
 
 #### Extract disease representations using PubMedBERT
-python preprocessing/BioBERT_disease.py
+```python
+preprocessing/BioBERT_disease.py
+```
 
 #### Extract piRNA sequence representations using DNABERT-2
 ```python
