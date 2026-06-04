@@ -40,7 +40,7 @@ processed/process_association.py
 ### Step 3: Train and Evaluate CaHCL (Student Stream & Alignment)
 You can train the model directly using the main script. The framework is equipped with a DATASET_ZOO configuration to adaptively switch physical settings based on the target dataset's sparsity.
 
-**1. Update the dataset name:** Open main_final.py and set your desired dataset:
+**1. Update the dataset name:** Open main.py and set your desired dataset:
 ```python
 # In main_final.py, set this variable to 'MNDR' or 'PIRDISEASE'
 TARGET_DATASET = 'PIRDISEASE'
