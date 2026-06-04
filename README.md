@@ -1,61 +1,59 @@
-#CaHCL:基于大规模模型指导的语义比对和因果去偏倚的piRNA-疾病关联预测
+# CaHCL: piRNA-disease association prediction based on large-scale model-guided semantic alignment and causal debiasing
 
-这个存储库包含该论文的官方PyTorch实现**“CaHCL:基于大规模模型指导的语义比对和因果去偏倚的piRNA-疾病关联预测”**.
+This repository contains the official PyTorch implementation for the paper **"CaHCL: piRNA-disease association prediction based on large-scale model-guided semantic alignment and causal debiasing"**.
 
-##💡概观
-CaHCL是一个跨模态的“教师-学生”双流框架，旨在准确识别极端稀疏网络中的piRNA-疾病关联(PDA)。它协同作用**因果推理**和**大型语言模型(LLM)**为了克服传统图形神经网络(GNNs)中固有的拓扑数据泄漏、流行度偏差和假阴性碰撞陷阱。
+## 💡 Overview
+CaHCL is a cross-modal "Teacher-Student" dual-stream framework designed to accurately identify piRNA-disease associations (PDAs) in extremely sparse networks. It synergizes **Causal Inference (IPW)** and **Large Language Models (LLMs)** to overcome topological data leakage, popularity bias, and false-negative collision traps inherent in conventional Graph Neural Networks (GNNs).
 
-##⚙️要求
-代码已经在Python 3.9.19下测试过了。要安装所需的依赖项，请运行:
+## ⚙️ Requirements
+The code has been tested under Python 3.9.19. To install the required dependencies, run:
 
-```尝试
-pip安装数量==1.26.4
-pip安装熊猫==2.2.2
-pip安装炬==1.13.1
-pip安装焊炬组==1.6.1+pt113cu116
-pip安装焊炬-几何==2.6.1
-pip安装火炬-分散==2.1.1+pt113cu116
-pip安装焊炬-稀疏==0.6.17+pt113cu116
+```bash
+pip install numpy==1.26.4
+pip install pandas==2.2.2
+pip install torch==1.13.1
+pip install torch-geometric==2.6.1
+pip install torch-scatter==2.1.1+pt113cu116
+pip install torch-sparse==0.6.17+pt113cu116
 ```
 
-##🚀快速启动
-###步骤1: LLM语义特征提取(教师流)
-首先，利用冻结的预训练语言模型提取高保真语义锚。
+## 🚀 Quick Start
+### Step 1: LLM Semantic Feature Extraction (Teacher Stream)
+First, leverage the frozen pre-trained language models to extract high-fidelity semantic anchors.
 
-####使用PubMedBERT提取疾病表示
-```大蟒
-预处理/BioBERT_disease.py
+#### Extract disease representations using PubMedBERT:
+```python 
+LLM/BioBERT_disease.py
 ```
 
-####使用DNABERT-2提取piRNA序列表达
-```大蟒
-预处理/DNABERT-2_piRNA.py
+#### Extract piRNA sequence representations using DNABERT-2:
+```python
+LLM/DNABERT-2_piRNA.py
 ```
 
-###第二步:协会网络建设
-将生物学特征与二分图拓扑对齐，以生成所需的。pt和。npy文件。
-```大蟒
-预处理/进程_关联. py
+### Step 2: Association Network Construction
+Align the biological features with the bipartite graph topology to generate the required .pt and .npy files.
+```python
+processed/process_association.py
 ```
 
-###步骤3:培训和评估CaHCL(学生流和调整)
-您可以使用主脚本直接训练模型。该框架配备有`资料组`基于目标数据集的稀疏性来自适应地切换物理设置的配置。
+### Step 3: Train and Evaluate CaHCL (Student Stream & Alignment)
+You can train the model directly using the main script. The framework is equipped with a DATASET_ZOO configuration to adaptively switch physical settings based on the target dataset's sparsity.
 
-**1.更新数据集名称:**打开`主_最终. py`并设置您想要的数据集:
-```大蟒
-#在main.py中，将此变量设置为“MNDR”或“PIRDISEASE”
-TARGET_DATASET = 'PIRDISEASE '
+**1. Update the dataset name:** Open main_final.py and set your desired dataset:
+```python
+# In main_final.py, set this variable to 'MNDR' or 'PIRDISEASE'
+TARGET_DATASET = 'PIRDISEASE'
 ```
 
-**2.更新数据路径:**打开`utils/data_loader.py`并确保load_precomputed_data函数中的data_dir参数指向相应的数据集文件夹:
-```大蟒
-#在utils/data_loader.py中，更新目录路径
-def load _ pre computed _ data(data _ dir = ' data/PIR disease v 1.0/processed '):
+**2. Update the data path:** Open utils/data_loader.py and ensure the data_dir parameter in the load_precomputed_data function points to the corresponding dataset folder:
+```python
+# In utils/data_loader.py, update the directory path
+def load_precomputed_data(data_dir='piRDisease V1.0/processed'):
 ```
 
-**3.执行培训脚本:**
-```大蟒
+**3. Execute the training script:**
+```python
 main.py
 ```
-
-该脚本将执行5重交叉验证，并在完成后输出综合评估指标(AUC、AUPR、Acc、F1、Pre、Sen)。
+The script will perform 5-fold cross-validation and output the comprehensive evaluation metrics (AUC, AUPR, Acc, F1, Pre, Sen) upon completion.
